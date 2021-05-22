@@ -116,9 +116,21 @@ class tree:
         return vertice
 
     def tree_minimum_recu(self):
-        atual = self.root
-        anterior = None
-        while atual != None:
-            anterior = atual
-            atual = atual.esq
-        return anterior
+        if self.left is None:
+            return self
+        else:
+            return self.left.tree_minimum_recu()
+
+    
+    def tree_pre_order(self, atual):
+         if atual != None:
+              print(atual.item,end=" ")
+              self.tree_pre_order(atual.left)
+              self.tree_pre_order(atual.right)
+       
+    
+    def tree_pos_order(self, atual):
+        if atual != None:
+            self.tree_pos_order(atual.left)
+            self.tree_pos_order(atual.right)
+            print(atual.item,end=" ")
