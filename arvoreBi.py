@@ -1,15 +1,38 @@
+#Infelizmente nao consegui concluir com exeto esta atividade, espero que compreenda e entenda o meu esforco.
+
 class Nodo:
      
-     def __init__(self, chave, right, left):
-          self.chave = chave
-          self.right = right
-          self.left = left
+     def __init__(self, key):
+          self.key = key
+          self.right = None
+          self.left = None
+          self.pai = None
 
-class tree:
+
+class Tree:
 
     def __init__(self):
-          self.raiz = Nodo(None,None,None)
+          self.raiz = Nodo(None)
           self.raiz = None
+
+    def treeInsert(self, key, nodo = None):
+        
+        if nodo is None:
+            nodo = self.raiz
+        if self.raiz is None:
+            self.raiz = Nodo(key)
+        else:
+            if key <= nodo.key:
+                if nodo.left is None:
+                    nodo.left = Nodo(key)
+                else:
+                    return self.TreeInsert(key, nodo = nodo.left)
+            else:
+                if nodo.right is None:
+                    nodo.right = Nodo(key)
+                else:
+                    return self.TreeInsert(key, nodo=nodo.right)
+
 
 
     def tree_remove(self, z):
@@ -53,27 +76,6 @@ class tree:
         if(v != None):
             v.pai = u.pai
 
-    def treeInsert(self, z):
-        y = None
-        x = self.raiz
-
-        while (x != None):
-            y = x
-            if(z.key < x.key):
-                x = x.left
-            else:
-                x = x.right
-
-        z.pai = y
-
-        if(y == None):
-            self.riz = z
-        elif(z.key < y.key):
-            y.left = z
-        else:
-            y.right = z
-        self.count += 1
-
     
     def interative_tree_search(self, key):
         if(self.raiz == None):
@@ -87,21 +89,39 @@ class tree:
 
         return vertice
 
+    def decrescente_tree_walk(self, vertice = None): 
 
-    def inorde_tree_walk(self, vertice = None):
-        if(self.raiz == None): 
+        if (self.raiz == None):
             return
-        
-        if(verice == None):
+
+        if (vertice == None):
             vertice = self.raiz
-        
-        if(vertice.left != None): 
-            self.inorde_tree_walk(vertice = vertice.left)
+
+        if (vertice.right != None):
+            self.decrescente_tree_walk(vertice = vertice.right)
 
         print(vertice)
 
-        if(vertice.right != None): 
-            self.inorde_tree_walk(vertice = vertice.right)
+        if (vertice.left != None):
+            self.decrescente_tree_walk(vertice = vertice.left)
+        
+        return vertice
+
+
+    def inorde_tree_walk(self, vertice = None):
+
+        if (self.raiz == None):
+            return
+
+        if (vertice == None): 
+            vertice = self.raiz
+
+        if (vertice.left != None):
+            self.inorder_tree_walk(vertice = vertice.left)
+        print(vertice) 
+    
+        if (vertice.right != None):
+            self.inorder_tree_walk(vertice = vertice.right)
 
 
     def tree_minimum(self, vertice = None):
@@ -111,7 +131,7 @@ class tree:
         if(vertice == None):
             vertice = self.raiz
         
-        while(verice.left != None):
+        while(vertice.left != None):
             vertice = vertice.left
         return vertice
 
@@ -131,6 +151,13 @@ class tree:
     
     def tree_pos_order(self, vertice):
         if vertice != None:
-            self.tree_pos_order(vertice.left)
             self.tree_pos_order(vertice.right)
+            self.tree_pos_order(vertice.left)
             print(vertice.item,end=" ")
+
+arvore = Tree()
+arvore.treeInsert(100)
+arvore.treeInsert(172)
+arvore.treeInsert(50)
+arvore.tree_minimum()
+arvore.decrescente_tree_walk()
